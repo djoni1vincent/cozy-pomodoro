@@ -32,7 +32,11 @@ export default function Timer() {
           onClick={() => setIsActive(!isActive)}
         >
           {isActive ? "Pause" : "Start"}
-        </button>
+            </button>
+            <button className="mt-2" onClick={() => setTimeLeft(1 * 10)}>Reset</button>
+
+        
+
       </div>
     </>
   );
