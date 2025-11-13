@@ -22,22 +22,23 @@ export default function Timer() {
   return (
     <>
       <h2 className="mt-12 font-black font-mono text-6xl ">Pomodoro</h2>
-      <div className="mt-80 flex flex-col items-center">
+      <div className="[#FFF5E1] mt-80 flex flex-col items-center">
         {" "}
         <p className="font-mono text-9xl ">
           {minutes}:{formattedSeconds}
         </p>
         <button
-          className="bg-red-400 rounded-md px-8 py-4 mt-10 text-white font-bold text-2xl hover:bg-red-500 transition-colors"
+          className="bg-red-400 rounded-lg shadow-lg px-8 py-4 mt-10 text-white font-bold text-2xl hover:bg-red-500 transition-colors"
           onClick={() => setIsActive(!isActive)}
         >
           {isActive ? "Pause" : "Start"}
-            </button>
-            <button className="mt-2" onClick={() => setTimeLeft(1 * 10)}>Reset</button>
-
-        
-
+        </button>
+        <button className="mt-2 bg-[#85b2f5] text-[#532e2b] px-4 py-2 rounded-lg shadow hover:bg-[#E6E6FA]" onClick={() => setTimeLeft(1 * 10)}>
+          Reset
+        </button>
       </div>
+
+
     </>
   );
 }
