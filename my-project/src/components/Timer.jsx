@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import bell from "../assets/bell.mp3";
 
 export default function Timer() {
   const [timeLeft, setTimeLeft] = useState(25 * 60);
@@ -6,13 +7,13 @@ export default function Timer() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
   const formattedSeconds = seconds.toString().padStart(2, "0");
-    const [mode, setMode] = useState("work" , "break");
-
+  const [mode, setMode] = useState("work", "break");
 
   useEffect(() => {
     if (!isActive) return;
     if (timeLeft === 0) {
       setMode(mode === "work" ? "break" : "work");
+      new Audio(bell).play();
       setTimeLeft(mode === "work" ? 5 * 60 : 25 * 60);
       return;
     }
@@ -22,9 +23,10 @@ export default function Timer() {
     return () => clearInterval(interval);
   }, [isActive, timeLeft]);
 
-useEffect(() => {
-  document.body.style.backgroundColor = mode === "work" ? "#987caa" : "#85b2f5";
-}, [mode]);
+  useEffect(() => {
+    document.body.style.backgroundColor =
+      mode === "work" ? "#987caa" : "#85b2f5";
+  }, [mode]);
 
   return (
     <>
