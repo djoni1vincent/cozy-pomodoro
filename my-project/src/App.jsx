@@ -17,6 +17,12 @@ export default function App() {
       <Timer />
       
     </div>
+    <button
+        onClick={openPopup}
+        className="opacity-70 fixed bottom-6 right-6 bg-[#7cc290] text-white px-4 py-2 rounded-lg hover:bg-[#6aa77a] shadow-lg transition"
+      >
+        Open in small window
+      </button>
 </>
   )
 }

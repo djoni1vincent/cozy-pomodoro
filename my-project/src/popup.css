@@ -1,0 +1,19 @@
+body {
+  background-color: #ffe5b4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+}
+
+#timer {
+  margin-bottom: 250px;
+}
+
+h2 {
+  display: none;
+}
+
+
