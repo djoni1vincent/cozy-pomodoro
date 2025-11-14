@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import bell from "../assets/bell.mp3";
 import settings from "../assets/cog.png";
-import Modal from './Modal'
+import Modal from "./Modal";
 
 export default function Timer() {
   const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
   const [mode, setMode] = useState("work");
+
+  const [focusTime, setFocusTime] = useState(25 * 60);
+  const [pauseTime, setPauseTime] = useState(5 * 60);
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -19,7 +22,7 @@ export default function Timer() {
       const nextMode = mode === "work" ? "break" : "work";
       setMode(nextMode);
       new Audio(bell).play();
-      setTimeLeft(nextMode === "work" ? 25 * 60 : 5 * 60);
+      setTimeLeft(nextMode === "work" ? focusTime : pauseTime);
       return;
     }
 
@@ -31,17 +34,25 @@ export default function Timer() {
   }, [isActive, timeLeft, mode]);
 
   useEffect(() => {
-    document.body.style.backgroundColor =
-      mode === "work" ? "#987caa" : "#85b2f5";
-  }, [mode]);
+    if (!isActive) {
+      if (mode == "work") {
+        setTimeLeft(focusTime);
+      } else {
+        setTimeLeft(pauseTime);
+      }
+    }
+  }, [focusTime, pauseTime, mode, isActive]);
 
+  useEffect(() => {
+    document.body.style.backgroundColor =
+      mode === "work" ? "#987caa" : "#987caa";
+  }, [mode]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
-    setIsModalOpen(true)
-  }
-
+    setIsModalOpen(true);
+  };
 
   return (
     <>
@@ -63,16 +74,32 @@ export default function Timer() {
 
           <button
             className="opacity-70 text-xs md:text-xl transition-colors duration-300 bg-[#85b2f5] text-[#52302d] shadow-lg px-4 py-2 md:px-8 md:py-4 rounded-lg  hover:bg-[#a7a7df] mt-4"
-            onClick={() => setTimeLeft(25 * 60)}
+            onClick={() => {
+              setIsActive(false);
+              setTimeLeft(mode === "work" ? focusTime : pauseTime);
+            }}
           >
             Reset
           </button>
 
-          <button onClick={toggleModal} className="flex justify-center items-center  mt-4 ">
-            <img src={settings} alt="settings" className="w-6 h-6 md:w-10 md:h-10 "/>
-          </button>
+          {isModalOpen && (
+            <Modal
+              setIsModalOpen={setIsModalOpen}
+              setFocusTime={setFocusTime}
+              setPauseTime={setPauseTime}
+            />
+          )}
 
-          {isModalOpen && <Modal setIsModalOpen={setIsModalOpen}/>}
+          <button
+            onClick={toggleModal}
+            className="flex justify-center items-center  mt-4 "
+          >
+            <img
+              src={settings}
+              alt="settings"
+              className="w-6 h-6 md:w-10 md:h-10 "
+            />
+          </button>
         </div>
       </div>
     </>

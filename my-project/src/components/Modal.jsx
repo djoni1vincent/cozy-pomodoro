@@ -1,4 +1,4 @@
-export default function Modal({ setIsModalOpen }) {
+export default function Modal({ setIsModalOpen, setFocusTime, setPauseTime }) {
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
       {/* ОКНО */}
@@ -7,7 +7,20 @@ export default function Modal({ setIsModalOpen }) {
 
         {/* Тут будут настройки */}
         <div className="space-y-3">
-          <p className="text-gray-800"></p>
+          <p className="text-gray-800 flex justify-evenly">
+            <input
+              placeholder="start"
+              className="bg-gray-100 max-w-20 text-center"
+              type="number"
+              onChange={(e) => setFocusTime(Number(e.target.value) * 60)}
+            />
+            <input
+              placeholder="pause"
+              className="bg-gray-100 max-w-20 p-1 text-center"
+              type="number"
+              onChange={(e) => setPauseTime(Number(e.target.value) * 60)}
+            />
+          </p>
         </div>
 
         <button
